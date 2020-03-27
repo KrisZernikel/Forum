@@ -1,0 +1,43 @@
+{
+  "name": "forum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-watch": "parcel watch ./src/client/index.html",
+    "start-watch": "nodemon ./src/server/index.js",
+    "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run build-watch\"",
+    "build": "parcel build ./src/client/index.html",
+    "start": "npm run build && node ./src/server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@material-ui/icons": "^4.9.1",
+    "@types/react": "^16.9.25",
+    "aws-sdk": "^2.647.0",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2",
+    "parcel-bundler": "^1.12.4"
+  }
+}
