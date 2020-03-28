@@ -39,7 +39,7 @@ export default ({ signOut, post, user, src }) => {
             } catch (e) {
                 console.log(e)
             }
-            setPosts(response.data.Items)
+            setPosts(response.data.Items.reverse())
         }
         await _scanPosts()
     }
@@ -68,7 +68,7 @@ export default ({ signOut, post, user, src }) => {
             } catch (e) {
                 console.log(e)
             }
-            setPosts(response.data.Items)
+            setPosts(response.data.Items.reverse())
         }
         _saveUser()
         _scanPosts()
