@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PostBox from './PostBox';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
 
 import axios from 'axios';
 
@@ -23,11 +25,23 @@ const useStyles = makeStyles(theme => ({
 export default ({ signOut, post, user, src }) => {
     const [posts, setPosts] = useState([])
     const [comment, setComment] = useState("")
-    const [trigger, setTrigger] = useState(false)
-    const handlePost = () => {
-        post({ email, post: comment })
+    const handlePost = async () => {
+        await post({ email, post: comment })
         setComment("")
-        setTrigger(!trigger)
+
+        const _scanPosts = async () => {
+            let response
+            try {
+                response = await axios({
+                    method: 'get',
+                    url: '/api/dynamo/scan-posts'
+                })
+            } catch (e) {
+                console.log(e)
+            }
+            setPosts(response.data.Items)
+        }
+        await _scanPosts()
     }
     const classes = useStyles();
     const { email } = user._json
@@ -59,21 +73,7 @@ export default ({ signOut, post, user, src }) => {
         _saveUser()
         _scanPosts()
     }, [])
-    useEffect(() => {
-        const _scanPosts = async () => {
-            let response
-            try {
-                response = await axios({
-                    method: 'get',
-                    url: '/api/dynamo/scan-posts'
-                })
-            } catch (e) {
-                console.log(e)
-            }
-            setPosts(response.data.Items)
-        }
-        _scanPosts()
-    }, [trigger])
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -93,11 +93,13 @@ export default ({ signOut, post, user, src }) => {
                     setComment={setComment}
                     handlePost={handlePost}
                 />
-                <ul>
+                <List>
                     {
-                        posts.map(item => <li>{item.Post}</li>)
+                        posts.map((item, index) => <Paper key={index} component="li" style={{ width: "100%", marginBottom: "10px" }}>
+                            {item.Post}
+                        </Paper>)
                     }
-                </ul>
+                </List>
             </main>
         </div>
     )

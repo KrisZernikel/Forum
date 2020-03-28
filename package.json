@@ -8,7 +8,8 @@
     "start-watch": "nodemon ./src/server/index.js",
     "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run build-watch\"",
     "build": "parcel build ./src/client/index.html",
-    "start": "npm run build && node ./src/server/index.js"
+    "start": "npm run build && node ./src/server/index.js",
+    "prettier": "prettier-standard **/*.js"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +39,7 @@
     "@babel/preset-react": "^7.9.1",
     "concurrently": "^5.1.0",
     "nodemon": "^2.0.2",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "prettier-standard": "^16.2.1"
   }
 }
