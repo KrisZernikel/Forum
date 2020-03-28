@@ -1,0 +1,99 @@
+"use strict";
+
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports["default"] = void 0;
+
+  var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+  var _react = _interopRequireDefault(require("react"));
+
+  var _Paper = _interopRequireDefault(require("@material-ui/core/Paper"));
+
+  var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
+
+  var styles = {
+    postBox: {
+      boxSizing: "border-box",
+      width: "500px",
+      display: "flex",
+      flexDirection: "column"
+    },
+    textarea: {
+      boxSizing: "border-box",
+      width: "448px",
+      padding: "18px 48px 13px 12px",
+      display: "inline-flex"
+    }
+  };
+
+  var _default = function _default(_ref) {
+    var email = _ref.email,
+        src = _ref.src,
+        post = _ref.post,
+        handlePost = _ref.handlePost,
+        comment = _ref.comment,
+        setComment = _ref.setComment;
+    return /*#__PURE__*/_react["default"].createElement(_Paper["default"], {
+      elevation: 3,
+      style: styles.postBox
+    }, /*#__PURE__*/_react["default"].createElement("div", {
+      style: {
+        borderBox: "border-box",
+        height: "87px",
+        display: "flex"
+      }
+    }, /*#__PURE__*/_react["default"].createElement("div", {
+      style: (0, _defineProperty2["default"])({
+        width: "52px",
+        display: "inline-flex",
+        justifyContent: "center"
+      }, "justifyContent", "flex-end")
+    }, /*#__PURE__*/_react["default"].createElement("img", {
+      width: "40",
+      height: "40",
+      src: src,
+      alt: "",
+      style: {
+        borderRadius: "50%",
+        position: "relative",
+        top: "12px"
+      }
+    })), /*#__PURE__*/_react["default"].createElement("textarea", {
+      style: styles.textarea,
+      onChange: function onChange(e) {
+        return setComment(e.target.value);
+      },
+      value: comment
+    })), /*#__PURE__*/_react["default"].createElement("div", {
+      style: {
+        borderBox: "box-sizing",
+        padding: "0 12px 10px"
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+      onClick: handlePost,
+      size: "small",
+      variant: "contained",
+      color: "primary",
+      style: {
+        width: "100%"
+      }
+    }, "Post")));
+  };
+
+  exports["default"] = _default;
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

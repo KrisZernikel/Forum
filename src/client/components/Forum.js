@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import PostBox from './PostBox';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
+import CommentItem from './CommentItem';
 
 import axios from 'axios';
 
@@ -94,9 +95,12 @@ export default ({ signOut, post, user, src }) => {
                 />
                 <List>
                     {
-                        posts.map((item, index) => <Paper key={index} component="li" style={{ width: "100%", marginBottom: "10px" }}>
-                            {item.Post}
-                        </Paper>)
+                        posts.map((item, index) => <CommentItem 
+                        key={index}
+                        firstName={user._json.first_name}
+                        lastName={user._json.last_name}
+                        comment={item.Post} 
+                        />)
                     }
                 </List>
             </main>

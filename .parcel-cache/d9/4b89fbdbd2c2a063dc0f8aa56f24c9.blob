@@ -1,0 +1,29 @@
+"use strict";
+
+var helpers = require("../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+  var _reactCookie = require("react-cookie");
+
+  var _reactRouterDom = require("react-router-dom");
+
+  var _react = _interopRequireDefault(require("react"));
+
+  var _reactDom = require("react-dom");
+
+  var _Routes = _interopRequireDefault(require("./Routes"));
+
+  require("./index.css");
+
+  (0, _reactDom.render)( /*#__PURE__*/_react["default"].createElement(_reactCookie.CookiesProvider, null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Routes["default"], null))), document.getElementById('react-root'));
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

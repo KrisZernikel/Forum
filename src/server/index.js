@@ -48,7 +48,12 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj)
 })
 
+const {
+    createLightship
+  } = require('lightship')
 const app = express()
+// Lightship will start a HTTP service on port 9000.
+const lightship = createLightship()
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -95,4 +100,6 @@ app.get('*', require('connect-ensure-login').ensureLoggedIn('/'), (req, res, nex
     })
 })
 
-app.listen(3000, () => console.log('App listening on port 3000!'))
+app.listen(3000, () => {
+    lightship.signalReady()
+})
