@@ -1,14 +1,10 @@
 const router = require('express').Router()
-const { createDynamoDbClient, createPutItemInput, executePutItem } = require('../util/saveUser')
+const saveUserRouter = require('./saveUser')
+const savePostRouter = require('./savePost')
+const scanPostsRouter = require('./scanPosts')
 
-router.put('/save-user', async (req, res, next) => {
-    const { email, firstName, lastName } = req.body
-    try {
-    await executePutItem(createDynamoDbClient('localhost'), createPutItemInput(email, firstName, lastName))
-    } catch (e) {
-        console.log(e.message)
-    }
-    res.end()
-})
+router.use('/save-user', saveUserRouter)
+router.use('/save-post', savePostRouter)
+router.use('/scan-posts', scanPostsRouter)
 
 module.exports = router

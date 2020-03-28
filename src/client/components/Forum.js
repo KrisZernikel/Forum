@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,13 +20,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default ({ user, signOut, src }) => {
+export default ({ signOut, post, user, src }) => {
+    const [posts, setPosts] = useState([])
+    const [comment, setComment] = useState("")
+    const [trigger, setTrigger] = useState(false)
+    const handlePost = () => {
+        post({ email, post: comment })
+        setComment("")
+        setTrigger(!trigger)
+    }
     const classes = useStyles();
+    const { email } = user._json
     useEffect(() => {
         const _saveUser = async () => {
             console.log(user._json.first_name)
             await axios({
-                method: 'put',
+                method: 'post',
                 url: '/api/dynamo/save-user',
                 data: {
                     email: user.emails[0].value,
@@ -35,8 +44,36 @@ export default ({ user, signOut, src }) => {
                 }
             })
         }
+        const _scanPosts = async () => {
+            let response
+            try {
+                response = await axios({
+                    method: 'get',
+                    url: '/api/dynamo/scan-posts'
+                })
+            } catch (e) {
+                console.log(e)
+            }
+            setPosts(response.data.Items)
+        }
         _saveUser()
+        _scanPosts()
     }, [])
+    useEffect(() => {
+        const _scanPosts = async () => {
+            let response
+            try {
+                response = await axios({
+                    method: 'get',
+                    url: '/api/dynamo/scan-posts'
+                })
+            } catch (e) {
+                console.log(e)
+            }
+            setPosts(response.data.Items)
+        }
+        _scanPosts()
+    }, [trigger])
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -48,7 +85,19 @@ export default ({ user, signOut, src }) => {
                 </Toolbar>
             </AppBar>
             <main style={{ padding: "1rem" }}>
-                <PostBox src={src} />
+                <PostBox
+                    email={email}
+                    src={src}
+                    post={post}
+                    comment={comment}
+                    setComment={setComment}
+                    handlePost={handlePost}
+                />
+                <ul>
+                    {
+                        posts.map(item => <li>{item.Post}</li>)
+                    }
+                </ul>
             </main>
         </div>
     )
