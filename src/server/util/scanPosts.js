@@ -14,19 +14,6 @@
 
 const AWS = require('aws-sdk');
 
-// Create the DynamoDB Client with the region you want
-const region = 'us-east-1';
-const dynamoDbClient = createDynamoDbClient(region);
-
-// Create the input for scan call
-const scanInput = createScanInput();
-
- // Call DynamoDB's scan API
-executeScan(dynamoDbClient, scanInput).then(() => {
-    console.info('Scan API call has been executed.')
-  }
-);
-
 function createDynamoDbClient(regionName) {
     // Set the region
     // AWS.config.update({region: regionName});

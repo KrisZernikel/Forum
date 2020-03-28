@@ -47,7 +47,6 @@ export default ({ signOut, post, user, src }) => {
     const { email } = user._json
     useEffect(() => {
         const _saveUser = async () => {
-            console.log(user._json.first_name)
             await axios({
                 method: 'post',
                 url: '/api/dynamo/save-user',

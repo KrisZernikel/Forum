@@ -16,16 +16,6 @@ const AWS = require('aws-sdk');
 
 // Create the DynamoDB Client with the region you want
 const region = 'us-east-1';
-const dynamoDbClient = createDynamoDbClient(region);
-
-// Create the input for putItem call
-const putItemInput = createPutItemInput();
-
-// Call DynamoDB's putItem API
-executePutItem(dynamoDbClient, putItemInput).then(() => {
-    console.info('PutItem API call has been executed.')
-}
-);
 
 function createDynamoDbClient(regionName) {
     // Set the region
