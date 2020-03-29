@@ -19,7 +19,7 @@ export default ({ user, item }) => {
         _call()
     }, [])
     return (
-        <Paper key component="li" style={{ boxSizing: "border-box", width: "500px", minHeight: "5rem", marginBottom: "10px", padding: "1rem", wordWrap: "break-word" }}>
+        <Paper key component="li" style={{ boxSizing: "border-box", maxWidth: "500px", minHeight: "5rem", marginBottom: "10px", padding: "1rem", wordWrap: "break-word", fontSize: "14px" }}>
             <div>
                 <div>
                     {`${commentUser.FirstName} ${commentUser.LastName}`}

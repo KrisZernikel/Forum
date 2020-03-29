@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 const styles = {
     postBox: {
         boxSizing: "border-box",
-        width: "500px",
+        maxWidth: "500px",
         display: "flex",
         flexDirection: "column"
     },
