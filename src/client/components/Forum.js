@@ -95,11 +95,10 @@ export default ({ signOut, post, user, src }) => {
                 />
                 <List>
                     {
-                        posts.map((item, index) => <CommentItem 
+                        posts.map((item, index) => <CommentItem
                         key={index}
-                        firstName={user._json.first_name}
-                        lastName={user._json.last_name}
-                        comment={item.Post} 
+                        user={user}
+                        item={item}
                         />)
                     }
                 </List>
