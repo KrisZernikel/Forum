@@ -29,6 +29,7 @@ export default ({ user, item, handleDelete }) => {
       style={{
         boxSizing: 'border-box',
         maxWidth: '500px',
+        width: "100%",
         minHeight: '5rem',
         marginBottom: '10px',
         padding: '1rem',
