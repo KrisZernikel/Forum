@@ -6,11 +6,11 @@ const {
 } = require('../util/deletePost')
 
 router.post('/', async (req, res, next) => {
-  const { email, timeStamp } = req.body
+  const { Email, PostId } = req.body
   try {
     await executeDeleteItem(
       createDynamoDbClient('localhost'),
-      createDeleteItemInput(email, timeStamp)
+      createDeleteItemInput(Email, PostId)
     )
   } catch (e) {
     console.log(e.message)

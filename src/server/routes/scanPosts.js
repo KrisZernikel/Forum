@@ -6,9 +6,12 @@ const {
 } = require('../util/scanPosts')
 
 router.get('/', async (req, res, next) => {
-  res.json(
-    await executeScan(createDynamoDbClient('localhost'), createScanInput())
+  const scanPosts = await executeScan(
+    createDynamoDbClient('localhost'),
+    createScanInput()
   )
+  scanPosts.Items.reverse()
+  res.json(scanPosts)
 })
 
 module.exports = router

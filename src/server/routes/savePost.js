@@ -10,7 +10,7 @@ router.post('/', async (req, res, next) => {
   try {
     await executePutItem(
       createDynamoDbClient('localhost'),
-      createPutItemInput(email, post, new Date().getTime())
+      createPutItemInput(email, post)
     )
   } catch (e) {
     console.log(e.message)

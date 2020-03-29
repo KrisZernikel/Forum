@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build-watch": "parcel watch ./src/client/index.html",
-    "start-watch": "nodemon ./src/server/index.js",
+    "start-watch": "nodemon ./src/server/index.js --exec babel-node --presets @babel/preset-env",
     "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run build-watch\"",
     "build": "parcel build ./src/client/index.html",
     "start": "npm run build && node ./src/server/index.js",
@@ -31,10 +31,12 @@
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.1",

@@ -17,7 +17,15 @@ const styles = {
   }
 }
 
-export default ({ email, src, post, handlePost, comment, setComment }) => {
+export default ({
+  user,
+  email,
+  src,
+  post,
+  handlePost,
+  comment,
+  setComment
+}) => {
   return (
     <Paper elevation={3} style={styles.postBox}>
       <div style={{ borderBox: 'border-box', height: '87px', display: 'flex' }}>
@@ -39,6 +47,7 @@ export default ({ email, src, post, handlePost, comment, setComment }) => {
         </div>
         <textarea
           style={styles.textarea}
+          placeholder={`What's on your mind, ${user._json.first_name}?`}
           onChange={e => setComment(e.target.value)}
           value={comment}
         />

@@ -13,6 +13,7 @@
 //  aws_secret_access_key = YOUR_SECRET_ACCESS_KEY
 
 const AWS = require('aws-sdk')
+import { v4 as uuidv4 } from 'uuid'
 
 // Create the DynamoDB Client with the region you want
 const region = 'us-east-1'
@@ -30,15 +31,18 @@ function createDynamoDbClient (regionName) {
   return new AWS.DynamoDB()
 }
 
-function createPutItemInput (email, post, timeStamp) {
+function createPutItemInput (email, post) {
   return {
     TableName: 'Post',
     Item: {
       Email: {
         S: email
       },
+      PostId: {
+        S: uuidv4()
+      },
       TimeStamp: {
-        N: String(timeStamp)
+        N: String(new Date().getTime())
       },
       Post: {
         S: post

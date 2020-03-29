@@ -27,15 +27,15 @@ function createDynamoDbClient (regionName) {
   return new AWS.DynamoDB()
 }
 
-function createDeleteItemInput (email, timeStamp) {
+function createDeleteItemInput (Email, PostId) {
   return {
     TableName: 'Post',
     Key: {
       Email: {
-        S: email
+        S: Email
       },
-      TimeStamp: {
-        N: String(timeStamp)
+      PostId: {
+        S: PostId
       }
     }
   }

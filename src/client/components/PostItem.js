@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import moment from 'moment'
+import ReplyBox from './ReplyBox'
 
 export default ({ user, item, handleDelete }) => {
   const [commentUser, setCommentUser] = useState({})
@@ -29,7 +30,7 @@ export default ({ user, item, handleDelete }) => {
       style={{
         boxSizing: 'border-box',
         maxWidth: '500px',
-        width: "100%",
+        width: '100%',
         minHeight: '5rem',
         marginBottom: '10px',
         padding: '1rem',
@@ -71,6 +72,7 @@ export default ({ user, item, handleDelete }) => {
           ) : null}
         </div>
       </div>
+      <ReplyBox />
     </Paper>
   )
 }
