@@ -33,7 +33,7 @@ export default ({ signOut, post, user, src }) => {
         url: '/api/dynamo/delete-post',
         data: {
           Email: item.Email,
-          PostId: item.PostId
+          TimeStamp: item.TimeStamp
         }
       })
     }
