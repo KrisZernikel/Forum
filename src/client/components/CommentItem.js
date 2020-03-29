@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -31,13 +32,18 @@ export default ({ user, item, handleDelete }) => {
         minHeight: '5rem',
         marginBottom: '10px',
         padding: '1rem',
-        wordWrap: 'break-word',
-        fontSize: '14px'
+        wordWrap: 'break-word'
       }}
     >
       <div>
-        <div>{`${commentUser.FirstName} ${commentUser.LastName}`}</div>
-        <div style={{ paddingBottom: '12px' }}>
+        <Typography variant='subtitle1' component='p'>
+          {`${commentUser.FirstName} ${commentUser.LastName}`}
+        </Typography>
+        <Typography
+          variant='subtitle1'
+          component='p'
+          style={{ paddingBottom: '12px' }}
+        >
           {`${datetime.format('MMMM DD')} at ${
             datetime.format('hh:mm').substring(0, 1) === '0'
               ? datetime
@@ -45,8 +51,10 @@ export default ({ user, item, handleDelete }) => {
                   .substring(1, datetime.format('hh:mm').length)
               : datetime.format('hh:mm')
           }`}
-        </div>
-        <div>{item.Post}</div>
+        </Typography>
+        <Typography variant='subtitle1' component='p'>
+          {item.Post}
+        </Typography>
         <div
           style={{
             boxSizing: 'border-box',
