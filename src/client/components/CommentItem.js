@@ -50,7 +50,7 @@ export default ({ user, item, handleDelete }) => {
                   .format('hh:mm')
                   .substring(1, datetime.format('hh:mm').length)
               : datetime.format('hh:mm')
-          }`}
+          } ${datetime.format('A')}`}
         </Typography>
         <Typography variant='subtitle1' component='p'>
           {item.Post}
@@ -64,6 +64,7 @@ export default ({ user, item, handleDelete }) => {
             padding: '1rem'
           }}
         >
+          <Button>Reply</Button>
           {user._json.email === item.Email ? (
             <Button onClick={() => handleDelete(item)}>Delete</Button>
           ) : null}
