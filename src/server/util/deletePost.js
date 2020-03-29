@@ -15,18 +15,17 @@
 const AWS = require('aws-sdk')
 
 function createDynamoDbClient (regionName) {
-    // Set the region
-    // AWS.config.update({region: regionName});
-    // Use the following config instead when using DynamoDB Local
-    AWS.config.update({
-      region: 'localhost',
-      endpoint: 'http://localhost:8000',
-      accessKeyId: 'k5gf2o',
-      secretAccessKey: 'asfxb7'
-    })
-    return new AWS.DynamoDB()
-  }
-  
+  // Set the region
+  // AWS.config.update({region: regionName});
+  // Use the following config instead when using DynamoDB Local
+  AWS.config.update({
+    region: 'localhost',
+    endpoint: 'http://localhost:8000',
+    accessKeyId: 'k5gf2o',
+    secretAccessKey: 'asfxb7'
+  })
+  return new AWS.DynamoDB()
+}
 
 function createDeleteItemInput (email, timeStamp) {
   return {

@@ -26,32 +26,32 @@ export default ({ signOut, post, user, src }) => {
   const [posts, setPosts] = useState([])
   const [comment, setComment] = useState('')
 
-  const handleDelete = async (item) => {
+  const handleDelete = async item => {
     const _deletePost = async () => {
-        await axios({
-            method: "post",
-            url: "/api/dynamo/delete-post",
-            data: {
-                email: item.Email,
-                timeStamp: item.TimeStamp
-            }
-        })
+      await axios({
+        method: 'post',
+        url: '/api/dynamo/delete-post',
+        data: {
+          email: item.Email,
+          timeStamp: item.TimeStamp
+        }
+      })
     }
     await _deletePost()
 
     const _scanPosts = async () => {
-        let response
-        try {
-          response = await axios({
-            method: 'get',
-            url: '/api/dynamo/scan-posts'
-          })
-        } catch (e) {
-          console.log(e)
-        }
-        setPosts(response.data.Items.reverse())
+      let response
+      try {
+        response = await axios({
+          method: 'get',
+          url: '/api/dynamo/scan-posts'
+        })
+      } catch (e) {
+        console.log(e)
       }
-      await _scanPosts()
+      setPosts(response.data.Items.reverse())
+    }
+    await _scanPosts()
   }
   const handlePost = async () => {
     await post({ email, post: comment })
@@ -124,7 +124,12 @@ export default ({ signOut, post, user, src }) => {
         />
         <List>
           {posts.map((item, index) => (
-            <CommentItem key={index} user={user} item={item} handleDelete={handleDelete} />
+            <CommentItem
+              key={index}
+              user={user}
+              item={item}
+              handleDelete={handleDelete}
+            />
           ))}
         </List>
       </main>

@@ -37,7 +37,7 @@ export default ({ user, item, handleDelete }) => {
     >
       <div>
         <div>{`${commentUser.FirstName} ${commentUser.LastName}`}</div>
-        <div style={{ paddingBottom: "12px"}}>
+        <div style={{ paddingBottom: '12px' }}>
           {`${datetime.format('MMMM DD')} at ${
             datetime.format('hh:mm').substring(0, 1) === '0'
               ? datetime
@@ -56,7 +56,9 @@ export default ({ user, item, handleDelete }) => {
             padding: '1rem'
           }}
         >
-          {user._json.email === item.Email ? <Button onClick={() => handleDelete(item)}>Delete</Button> : null}
+          {user._json.email === item.Email ? (
+            <Button onClick={() => handleDelete(item)}>Delete</Button>
+          ) : null}
         </div>
       </div>
     </Paper>
