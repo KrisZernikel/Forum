@@ -15,48 +15,49 @@
 const AWS = require('aws-sdk')
 
 function createDynamoDbClient (regionName) {
-  // Set the region
-  // AWS.config.update({region: regionName});
-  // Use the following config instead when using DynamoDB Local
-  AWS.config.update({
-    region: 'localhost',
-    endpoint: 'http://localhost:8000',
-    accessKeyId: 'k5gf2o',
-    secretAccessKey: 'asfxb7'
-  })
-  return new AWS.DynamoDB.DocumentClient()
-}
+    // Set the region
+    // AWS.config.update({region: regionName});
+    // Use the following config instead when using DynamoDB Local
+    AWS.config.update({
+      region: 'localhost',
+      endpoint: 'http://localhost:8000',
+      accessKeyId: 'k5gf2o',
+      secretAccessKey: 'asfxb7'
+    })
+    return new AWS.DynamoDB()
+  }
+  
 
-function createQueryInput (email) {
+function createDeleteItemInput (email, timeStamp) {
   return {
-    TableName: 'User',
-    ScanIndexForward: false,
-    ConsistentRead: false,
-    KeyConditionExpression: '#Email = :Email',
-    ExpressionAttributeNames: {
-      '#Email': 'Email'
-    },
-    ExpressionAttributeValues: {
-      ':Email': email
+    TableName: 'Post',
+    Key: {
+      Email: {
+        S: email
+      },
+      TimeStamp: {
+        N: String(timeStamp)
+      }
     }
   }
 }
 
-async function executeQuery (dynamoDbClient, queryInput) {
-  // Call DynamoDB's query API
+async function executeDeleteItem (dynamoDbClient, deleteItemInput) {
+  // Call DynamoDB's deleteItem API
   try {
-    const queryOutput = await dynamoDbClient.query(queryInput).promise()
-    console.info('Query successful.')
-    // Handle queryOutput
-    return queryOutput
+    const deleteItemOutput = await dynamoDbClient
+      .deleteItem(deleteItemInput)
+      .promise()
+    console.info('Successfully deleted item.')
+    // Handle deleteItemOutput
   } catch (err) {
-    handleQueryError(err)
+    handleDeleteItemError(err)
   }
 }
 
-// Handles errors during Query execution. Use recommendations in error messages below to
+// Handles errors during DeleteItem execution. Use recommendations in error messages below to
 // add error handling specific to your application use-case.
-function handleQueryError (err) {
+function handleDeleteItemError (err) {
   if (!err) {
     console.error('Encountered error object was empty')
     return
@@ -69,7 +70,26 @@ function handleQueryError (err) {
     )
     return
   }
-  // here are no API specific errors to handle for Query, common DynamoDB API errors are handled below
+  switch (err.code) {
+    case 'ConditionalCheckFailedException':
+      console.error(
+        `Condition check specified in the operation failed, review and update the condition check before retrying. Error: ${err.message}`
+      )
+      return
+    case 'TransactionConflictException':
+      console.error(`Operation was rejected because there is an ongoing transaction for the item, generally safe to retry ' +
+       'with exponential back-off. Error: ${err.message}`)
+      return
+    case 'ItemCollectionSizeLimitExceededException':
+      console.error(
+        `An item collection is too large, you're using Local Secondary Index and exceeded size limit of` +
+          `items per partition key. Consider using Global Secondary Index instead. Error: ${err.message}`
+      )
+      return
+    default:
+      break
+    // Common DynamoDB API errors are handled below
+  }
   handleCommonErrors(err)
 }
 
@@ -127,4 +147,8 @@ function handleCommonErrors (err) {
   }
 }
 
-module.exports = { createDynamoDbClient, createQueryInput, executeQuery }
+module.exports = {
+  createDynamoDbClient,
+  createDeleteItemInput,
+  executeDeleteItem
+}

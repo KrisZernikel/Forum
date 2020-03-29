@@ -13,22 +13,22 @@ var Strategy = require('passport-facebook').Strategy
 // with a user object, which will be set at `req.user` in route handlers after
 // authentication.
 passport.use(
-    new Strategy(
-        {
-            clientID: '209655036809598',
-            clientSecret: '0fae5ceaeb94d9407a373db5706cc978',
-            callbackURL: '/return',
-            profileFields: ['id', 'emails', 'name', 'displayName', 'photos']
-        },
-        function (accessToken, refreshToken, profile, cb) {
-            // In this example, the user's Facebook profile is supplied as the user
-            // record.  In a production-quality application, the Facebook profile should
-            // be associated with a user record in the application's database, which
-            // allows for account linking and authentication with other identity
-            // providers.
-            return cb(null, profile)
-        }
-    )
+  new Strategy(
+    {
+      clientID: '209655036809598',
+      clientSecret: '0fae5ceaeb94d9407a373db5706cc978',
+      callbackURL: '/return',
+      profileFields: ['id', 'emails', 'name', 'displayName', 'photos']
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      // In this example, the user's Facebook profile is supplied as the user
+      // record.  In a production-quality application, the Facebook profile should
+      // be associated with a user record in the application's database, which
+      // allows for account linking and authentication with other identity
+      // providers.
+      return cb(null, profile)
+    }
+  )
 )
 
 // Configure Passport authenticated session persistence.
@@ -41,16 +41,14 @@ passport.use(
 // example does not have a database, the complete Facebook profile is serialized
 // and deserialized.
 passport.serializeUser(function (user, cb) {
-    cb(null, user)
+  cb(null, user)
 })
 
 passport.deserializeUser(function (obj, cb) {
-    cb(null, obj)
+  cb(null, obj)
 })
 
-const {
-    createLightship
-  } = require('lightship')
+const { createLightship } = require('lightship')
 const app = express()
 // Lightship will start a HTTP service on port 9000.
 const lightship = createLightship()
@@ -64,12 +62,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 app.use(
-    require('express-session')({
-        secret: 'keyboard cat',
-        resave: true,
-        saveUninitialized: true,
-        cookie: {}
-    })
+  require('express-session')({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {}
+  })
 )
 
 // Initialize Passport and restore authentication state, if any, from the
@@ -84,22 +82,26 @@ const dynamoRouter = require('./routes/dynamo')
 app.use('/api/dynamo', dynamoRouter)
 
 app.get(
-    '/return',
-    passport.authenticate('facebook', { failureRedirect: '/' }),
-    function (req, res) {
-        res.cookie('user', req.user)
-        res.redirect('/')
-    }
+  '/return',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function (req, res) {
+    res.cookie('user', req.user)
+    res.redirect('/')
+  }
 )
 
 app.use(express.static('dist'))
 
-app.get('*', require('connect-ensure-login').ensureLoggedIn('/'), (req, res, next) => {
+app.get(
+  '*',
+  require('connect-ensure-login').ensureLoggedIn('/'),
+  (req, res, next) => {
     res.sendFile(path.join(__dirname, '../../dist', 'index.html'), {
-        user: req.user
+      user: req.user
     })
-})
+  }
+)
 
 app.listen(3000, () => {
-    lightship.signalReady()
+  lightship.signalReady()
 })

@@ -1,16 +1,16 @@
 const router = require('express').Router()
 const {
   createDynamoDbClient,
-  createPutItemInput,
-  executePutItem
-} = require('../util/savePost')
+  createDeleteItemInput,
+  executeDeleteItem
+} = require('../util/deletePost')
 
 router.post('/', async (req, res, next) => {
-  const { email, post } = req.body
+  const { email, timeStamp } = req.body
   try {
-    await executePutItem(
+    await executeDeleteItem(
       createDynamoDbClient('localhost'),
-      createPutItemInput(email, post, new Date().getTime())
+      createDeleteItemInput(email, timeStamp)
     )
   } catch (e) {
     console.log(e.message)

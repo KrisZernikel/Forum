@@ -7,7 +7,7 @@
     "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run build-watch\"",
     "build": "parcel build ./src/client/index.html",
     "start": "npm run build && node ./src/server/index.js",
-    "prettier": "prettier-standard **/*.js"
+    "prettier": "prettier-standard src/**/*.js src/**/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "lightship": "^6.1.0",
+    "moment": "^2.24.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",

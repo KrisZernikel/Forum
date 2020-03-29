@@ -7,32 +7,36 @@ import Login from './components/Login'
 import Forum from './components/Forum'
 
 const Routes = ({ cookies }) => {
-    console.log(JSON.stringify(cookies.get("user")));
-    const signOut = () => {
-        cookies.remove('user')
-    }
-    const post = async (data) => {
-        await axios({
-            method: "post",
-            url: "/api/dynamo/save-post",
-            data: data
-        })
-    }
-    useEffect(() => {
-        window.history.replaceState('', document.title, window.location.pathname);
+  console.log(JSON.stringify(cookies.get('user')))
+  const signOut = () => {
+    cookies.remove('user')
+  }
+  const post = async data => {
+    await axios({
+      method: 'post',
+      url: '/api/dynamo/save-post',
+      data: data
     })
-    return (
-        <Switch>
-            <Route exact path="/">
-                {!cookies.get('user') ? <Login /> : <Forum
-                    user={cookies.get("user")}
-                    signOut={signOut}
-                    src={cookies.get("user").photos[0].value}
-                    post={post}
-                />}
-            </Route>
-        </Switch>
-    )
+  }
+  useEffect(() => {
+    window.history.replaceState('', document.title, window.location.pathname)
+  })
+  return (
+    <Switch>
+      <Route exact path='/'>
+        {!cookies.get('user') ? (
+          <Login />
+        ) : (
+          <Forum
+            user={cookies.get('user')}
+            signOut={signOut}
+            src={cookies.get('user').photos[0].value}
+            post={post}
+          />
+        )}
+      </Route>
+    </Switch>
+  )
 }
 
 export default withCookies(Routes)
